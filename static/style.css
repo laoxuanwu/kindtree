@@ -551,6 +551,34 @@ body {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+.admin-button {
+    position: fixed;
+
+    bottom: 10px;
+    left: 10px;
+
+    font-size: 11px;
+
+    color: rgba(255,255,255,0.6);
+
+    text-decoration: none;
+
+    z-index: 200;
+}
+
+.admin-button:hover {
+    color: white;
+}
 /* =========================
    MOBILE
 ========================= */
@@ -591,4 +619,5 @@ body {
         padding: 25px 20px;
     }
 }
+
 ```
