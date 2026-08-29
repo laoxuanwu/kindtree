@@ -73,19 +73,33 @@ def get_messages():
 
     conn.close()
 
+
     return jsonify([
+
         {
             "id": message["id"],
-            "name": message["name"],
-            "major": message["major"],
-            "sentence": message["sentence"],
-            "leaf_number": message["leaf_number"],
-            "position_x": message["position_x"],
-            "position_y": message["position_y"]
-        }
-        for message in messages
-    ])
 
+            "name": message["name"],
+
+            "major": message["major"],
+
+            "sentence": message["sentence"],
+
+            "leaf_number": message["leaf_number"],
+
+            "position_x": message["position_x"],
+
+            "position_y": message["position_y"],
+
+            "leaf_size": message["leaf_size"],
+
+            "leaf_rotation": message["leaf_rotation"]
+
+        }
+
+        for message in messages
+
+    ])
 
 # =========================
 # ADD MESSAGE
@@ -108,6 +122,233 @@ def submit():
     sentence = data.get("sentence", "").strip()
 
 
+    # =========================
+    # VALIDATION
+    # =========================
+
+    if not name:
+        return jsonify({
+            "success": False,
+            "error": "Please enter your name."
+        }), 400
+
+    if not major:
+        return jsonify({
+            "success": False,
+            "error": "Please enter your major."
+        }), 400
+
+    if not sentence:
+        return jsonify({
+            "success": False,
+            "error": "Please write a sentence."
+        }), 400
+
+
+    if len(name) > 100:
+        return jsonify({
+            "success": False,
+            "error": "Name is too long."
+        }), 400
+
+    if len(major) > 100:
+        return jsonify({
+            "success": False,
+            "error": "Major is too long."
+        }), 400
+
+    if len(sentence) > 300:
+        return jsonify({
+            "success": False,
+            "error": "Sentence is too long."
+        }), 400
+
+
+    # =========================
+    # DATABASE
+    # =========================
+
+    conn = get_db()
+
+
+    existing_numbers = conn.execute(
+        "SELECT leaf_number FROM messages"
+    ).fetchall()
+
+
+    used_numbers = {
+        row["leaf_number"]
+        for row in existing_numbers
+    }
+
+
+    leaf_number = 1
+
+    while leaf_number in used_numbers:
+        leaf_number += 1
+
+
+    # =========================
+    # EXISTING POSITIONS
+    # =========================
+
+    existing_positions = conn.execute("""
+        SELECT position_x, position_y, leaf_size
+        FROM messages
+    """).fetchall()
+
+
+    # =========================
+    # FIND A GOOD RANDOM PLACE
+    # =========================
+
+    position_x = None
+    position_y = None
+
+    leaf_size = None
+    leaf_rotation = None
+
+
+    for attempt in range(100):
+
+        # Keep leaves mostly inside the canopy.
+        candidate_x = random.uniform(15, 85)
+        candidate_y = random.uniform(18, 76)
+
+
+        # Natural variation in size.
+        candidate_size = random.uniform(8, 12)
+
+
+        # Small natural rotation.
+        candidate_rotation = random.uniform(-18, 18)
+
+
+        # Check distance from existing leaves.
+
+        good_position = True
+
+
+        for existing in existing_positions:
+
+            dx = candidate_x - existing["position_x"]
+            dy = candidate_y - existing["position_y"]
+
+
+            distance = (dx * dx + dy * dy) ** 0.5
+
+
+            # Minimum separation.
+            if distance < 8:
+
+                good_position = False
+
+                break
+
+
+        if good_position:
+
+            position_x = candidate_x
+            position_y = candidate_y
+
+            leaf_size = candidate_size
+            leaf_rotation = candidate_rotation
+
+            break
+
+
+    # =========================
+    # FALLBACK
+    # =========================
+
+    if position_x is None:
+
+        position_x = random.uniform(15, 85)
+        position_y = random.uniform(18, 76)
+
+        leaf_size = random.uniform(8, 12)
+        leaf_rotation = random.uniform(-18, 18)
+
+
+    # =========================
+    # SAVE
+    # =========================
+
+    try:
+
+        cursor = conn.execute("""
+            INSERT INTO messages
+            (
+                name,
+                major,
+                sentence,
+                leaf_number,
+                position_x,
+                position_y,
+                leaf_size,
+                leaf_rotation
+            )
+
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """, (
+            name,
+            major,
+            sentence,
+            leaf_number,
+            position_x,
+            position_y,
+            leaf_size,
+            leaf_rotation
+        ))
+
+
+        conn.commit()
+
+        message_id = cursor.lastrowid
+
+
+    except sqlite3.Error as error:
+
+        conn.close()
+
+        print("Database error:", error)
+
+        return jsonify({
+            "success": False,
+            "error": "Could not save your message."
+        }), 500
+
+
+    conn.close()
+
+
+    return jsonify({
+
+        "success": True,
+
+        "message": {
+
+            "id": message_id,
+
+            "name": name,
+
+            "major": major,
+
+            "sentence": sentence,
+
+            "leaf_number": leaf_number,
+
+            "position_x": position_x,
+
+            "position_y": position_y,
+
+            "leaf_size": leaf_size,
+
+            "leaf_rotation": leaf_rotation
+
+        }
+
+    })
     # -------------------------
     # VALIDATION
     # -------------------------
