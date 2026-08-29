@@ -1,7 +1,7 @@
+```css
 * {
     box-sizing: border-box;
 }
-
 
 html,
 body {
@@ -10,7 +10,6 @@ body {
     width: 100%;
     min-height: 100%;
 }
-
 
 body {
     font-family: Tahoma, Arial, sans-serif;
@@ -36,17 +35,16 @@ body {
     overflow: hidden;
 }
 
-
 .tree-image {
     position: absolute;
 
     width: 100%;
     height: 100%;
 
-    object-fit: cover;
-
     left: 0;
     top: 0;
+
+    object-fit: cover;
 
     z-index: 1;
 }
@@ -64,6 +62,8 @@ body {
 
     transform: translateX(-50%);
 
+    width: 90%;
+
     z-index: 10;
 
     text-align: center;
@@ -76,21 +76,21 @@ body {
     pointer-events: none;
 }
 
-
 .welcome-text h1 {
     margin: 0;
 
-    font-size: clamp(28px, 5vw, 55px);
+    font-size:
+        clamp(28px, 5vw, 55px);
 }
 
-
 .welcome-text p {
-    font-size: clamp(14px, 2vw, 20px);
+    font-size:
+        clamp(14px, 2vw, 20px);
 }
 
 
 /* =========================
-   LEAVES
+   LEAVES CONTAINER
 ========================= */
 
 #leaves-container {
@@ -99,14 +99,18 @@ body {
     width: 100%;
     height: 100%;
 
-    top: 0;
     left: 0;
+    top: 0;
 
     z-index: 5;
 
     pointer-events: none;
 }
 
+
+/* =========================
+   NORMAL LEAVES
+========================= */
 
 .leaf {
     position: absolute;
@@ -115,7 +119,8 @@ body {
     max-width: 150px;
     min-width: 80px;
 
-    transform: translate(-50%, -50%);
+    transform:
+        translate(-50%, -50%);
 
     cursor: pointer;
 
@@ -125,9 +130,9 @@ body {
         transform 0.2s ease,
         filter 0.2s ease;
 
-    animation: leafAppear 0.5s ease;
+    animation:
+        leafAppear 0.5s ease;
 }
-
 
 .leaf:hover {
     transform:
@@ -140,14 +145,12 @@ body {
         );
 }
 
-
 .leaf img {
     display: block;
 
     width: 100%;
     height: auto;
 }
-
 
 .leaf span {
     position: absolute;
@@ -178,7 +181,7 @@ body {
 
 
 /* =========================
-   ADD LEAF
+   ADD (+) LEAF
 ========================= */
 
 .add-leaf {
@@ -200,31 +203,23 @@ body {
         filter 0.2s ease;
 }
 
-
 .add-leaf:hover {
-
     transform: scale(1.12);
 
     filter:
         drop-shadow(
             0 5px 8px rgba(0, 0, 0, 0.25)
         );
-
 }
 
-
 .add-leaf img {
-
     display: block;
 
     width: 100%;
     height: auto;
-
 }
 
-
 .add-leaf span {
-
     position: absolute;
 
     top: 50%;
@@ -233,8 +228,7 @@ body {
     transform:
         translate(-50%, -50%);
 
-    font-family:
-        Arial, sans-serif;
+    font-family: Arial, sans-serif;
 
     font-size:
         clamp(35px, 5vw, 70px);
@@ -246,7 +240,6 @@ body {
     line-height: 1;
 
     pointer-events: none;
-
 }
 
 
@@ -257,79 +250,108 @@ body {
 @keyframes leafAppear {
 
     from {
-
         opacity: 0;
 
         transform:
             translate(-50%, -50%)
             scale(0.4);
-
     }
 
     to {
-
         opacity: 1;
 
         transform:
             translate(-50%, -50%)
             scale(1);
-
     }
-
 }
 
 
+/* =========================
+   MODALS
+========================= */
 
+.modal {
+    position: fixed;
 
-@media (max-width: 600px) {
+    display: none;
 
-    .leaf {
-        width: 15%;
-        min-width: 55px;
-    }
+    justify-content: center;
+    align-items: center;
 
+    left: 0;
+    top: 0;
 
-    .add-leaf {
+    width: 100%;
+    height: 100%;
 
-        width: 15%;
-        min-width: 55px;
+    background:
+        rgba(0, 0, 0, 0.45);
 
-        right: 3%;
-
-    }
-
-
-    .welcome-text {
-
-        top: 3%;
-
-        width: 90%;
-
-    }
-
-
-    .welcome-text h1 {
-
-        font-size: 30px;
-
-    }
-
-
-    .welcome-text p {
-
-        font-size: 13px;
-
-    }
-
-
-    .modal-content {
-
-        padding:
-            25px 20px;
-
-    }
-
+    z-index: 100;
 }
+
+.modal.show {
+    display: flex;
+}
+
+
+/* =========================
+   MODAL CONTENT
+========================= */
+
+.modal-content {
+    position: relative;
+
+    width: min(90%, 450px);
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.25);
+
+    direction: rtl;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+
+    text-align: center;
+
+    color: #365c2a;
+}
+
+
+/* =========================
+   CLOSE BUTTON
+========================= */
+
+.close-button {
+    position: absolute;
+
+    top: 10px;
+    left: 15px;
+
+    border: none;
+
+    background: none;
+
+    font-size: 30px;
+
+    cursor: pointer;
+
+    color: #777;
+}
+
+.close-button:hover {
+    color: #222;
+}
+
+
 /* =========================
    FORM
 ========================= */
@@ -342,7 +364,6 @@ body {
     gap: 8px;
 }
 
-
 #kindness-form label {
     margin-top: 8px;
 
@@ -350,7 +371,6 @@ body {
 
     color: #40583a;
 }
-
 
 #kindness-form input,
 #kindness-form textarea {
@@ -371,12 +391,10 @@ body {
     outline: none;
 }
 
-
 #kindness-form input:focus,
 #kindness-form textarea:focus {
     border-color: #7cab68;
 }
-
 
 #kindness-form textarea {
     height: 120px;
@@ -384,6 +402,10 @@ body {
     resize: vertical;
 }
 
+
+/* =========================
+   SUBMIT BUTTON
+========================= */
 
 .submit-button {
     margin-top: 15px;
@@ -407,11 +429,9 @@ body {
     transition: 0.2s;
 }
 
-
 .submit-button:hover {
     background: #557f45;
 }
-
 
 .submit-button:disabled {
     opacity: 0.6;
@@ -419,6 +439,10 @@ body {
     cursor: wait;
 }
 
+
+/* =========================
+   ERROR
+========================= */
 
 #form-error {
     color: #c0392b;
@@ -430,20 +454,18 @@ body {
 
 
 /* =========================
-   MESSAGE
+   MESSAGE POPUP
 ========================= */
 
 .message-content {
     text-align: center;
 }
 
-
 #message-text {
     line-height: 1.9;
 
     color: #333;
 }
-
 
 .message-name {
     font-size: 20px;
@@ -453,7 +475,6 @@ body {
     color: #416438;
 }
 
-
 .message-major {
     font-size: 14px;
 
@@ -461,7 +482,6 @@ body {
 
     margin-bottom: 15px;
 }
-
 
 .message-sentence {
     font-size: 18px;
@@ -482,11 +502,23 @@ body {
 
     .leaf {
         width: 15%;
+
         min-width: 55px;
+    }
+
+    .add-leaf {
+        width: 15%;
+
+        min-width: 55px;
+
+        right: 3%;
+
+        top: 45%;
     }
 
     .welcome-text {
         top: 3%;
+
         width: 90%;
     }
 
@@ -502,3 +534,4 @@ body {
         padding: 25px 20px;
     }
 }
+```
