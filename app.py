@@ -1,13 +1,107 @@
 from flask import Flask, render_template, request, jsonify
 import sqlite3
 import os
+from flask import session, redirect, url_for
 import random
 
 app = Flask(__name__)
+app.secret_key = os.environ.get(
+    "FLASK_SECRET_KEY",
+    "change-this-secret-key"
+)
 
+ADMIN_PASSWORD = os.environ.get(
+    "ADMIN_PASSWORD"
+)
 DATABASE = "/kindness/app/database/kindness.db"
 
 
+
+
+
+
+
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+
+    if request.method == "POST":
+
+        password = request.form.get("password", "")
+
+        if ADMIN_PASSWORD and password == ADMIN_PASSWORD:
+
+            session["admin_logged_in"] = True
+
+            return redirect(url_for("admin_panel"))
+
+        return render_template(
+            "admin_login.html",
+            error="رمز عبور اشتباه است."
+        )
+
+    return render_template("admin_login.html")
+
+
+
+
+
+
+
+@app.route("/admin/panel")
+def admin_panel():
+
+    if not session.get("admin_logged_in"):
+        return redirect(url_for("admin"))
+
+    conn = get_db()
+
+    messages = conn.execute(
+        "SELECT * FROM messages ORDER BY id DESC"
+    ).fetchall()
+
+    conn.close()
+
+    return render_template(
+        "admin.html",
+        messages=messages
+    )
+
+
+
+
+
+
+
+
+@app.route("/admin/delete/<int:message_id>", methods=["POST"])
+def delete_message(message_id):
+
+    if not session.get("admin_logged_in"):
+        return redirect(url_for("admin"))
+
+    conn = get_db()
+
+    conn.execute(
+        "DELETE FROM messages WHERE id = ?",
+        (message_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("admin_panel"))
+
+
+
+
+
+
+@app.route("/admin/logout")
+def admin_logout():
+
+    session.pop("admin_logged_in", None)
+
+    return redirect(url_for("admin"))
 # =========================
 # DATABASE
 # =========================
