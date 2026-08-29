@@ -151,6 +151,16 @@ function createLeaf(message) {
         message.leaf_rotation + "deg"
     );
 
+    leaf.style.setProperty(
+    "--sway-duration",
+    (4 + Math.random() * 3) + "s"
+);
+
+leaf.style.setProperty(
+    "--sway-delay",
+    (-Math.random() * 5) + "s"
+);
+
 
     leaf.messageData =
         message;
