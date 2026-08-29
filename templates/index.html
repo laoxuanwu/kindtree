@@ -2,268 +2,213 @@
 <html lang="fa" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>درخت مهربانی</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
 </head>
 
 
 <body>
 
+
+<main class="tree-container">
+
+
     <!-- =========================
          TREE
     ========================== -->
 
-    <main class="tree-container">
+    <img
+        src="{{ url_for('static', filename='images/tree.png') }}"
+        class="tree-image"
+        alt="درخت مهربانی"
+    >
+
+
+    <!-- =========================
+         WELCOME TEXT
+    ========================== -->
+
+    <div class="welcome-text">
+
+        <h1>
+            درخت مهربانی
+        </h1>
+
+        <p>
+            یک جمله‌ی مهربانانه بنویس و آن را روی یکی از برگ‌ها قرار بده 🌿
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         LEAVES
+    ========================== -->
+
+    <div id="leaves-container">
+
+        <!--
+            Existing leaves are created
+            automatically by JavaScript.
+        -->
+
+    </div>
+
+
+    <!-- =========================
+         ADD LEAF
+    ========================== -->
+
+    <div
+        id="add-leaf"
+        class="add-leaf"
+        title="افزودن جمله"
+    >
 
         <img
-            src="{{ url_for('static', filename='images/tree.png') }}"
-            class="tree-image"
-            alt="درخت مهربانی"
+            src="{{ url_for('static', filename='images/leaf.png') }}"
+            alt="افزودن برگ"
         >
 
-
-        <!-- =========================
-             LEAVES
-        ========================== -->
-
-        <div id="leaves-container">
-
-            <!--
-            Each leaf has a number.
-
-            Later we can change the positions
-            to perfectly match your actual tree.
-            -->
-
-            <div class="leaf" data-leaf="1" style="left: 15%; top: 20%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="2" style="left: 25%; top: 15%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="3" style="left: 35%; top: 23%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="4" style="left: 45%; top: 13%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="5" style="left: 55%; top: 20%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="6" style="left: 65%; top: 14%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="7" style="left: 75%; top: 23%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="8" style="left: 20%; top: 32%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="9" style="left: 32%; top: 35%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="10" style="left: 47%; top: 31%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="11" style="left: 60%; top: 34%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="12" style="left: 73%; top: 33%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="13" style="left: 28%; top: 45%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="14" style="left: 42%; top: 43%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="15" style="left: 56%; top: 45%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="16" style="left: 70%; top: 44%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="17" style="left: 18%; top: 52%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="18" style="left: 35%; top: 55%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="19" style="left: 50%; top: 53%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="20" style="left: 65%; top: 55%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-            <div class="leaf" data-leaf="21" style="left: 80%; top: 51%;">
-                <img src="{{ url_for('static', filename='images/leaf.png') }}">
-                <span></span>
-            </div>
-
-        </div>
-
-
-        <!-- =========================
-             TITLE
-        ========================== -->
-
-        <div class="welcome-text">
-
-            <h1>درخت مهربانی</h1>
-
-            <p>
-                یک جمله‌ی مهربانانه بنویس و آن را روی یکی از برگ‌ها قرار بده 🌿
-            </p>
-
-        </div>
-
-    </main>
-
-
-    <!-- =========================
-         FORM MODAL
-    ========================== -->
-
-    <div id="form-modal" class="modal">
-
-        <div class="modal-content">
-
-            <button id="close-form"
-                    class="close-button">
-                ×
-            </button>
-
-            <h2>یک برگ مهربانی بساز 🌱</h2>
-
-            <form id="kindness-form">
-
-                <input
-                    type="hidden"
-                    id="leaf-number"
-                >
-
-
-                <label for="name">
-                    نام
-                </label>
-
-                <input
-                    type="text"
-                    id="name"
-                    maxlength="100"
-                    required
-                    placeholder="نام شما"
-                >
-
-
-                <label for="major">
-                    رشته
-                </label>
-
-                <input
-                    type="text"
-                    id="major"
-                    maxlength="100"
-                    required
-                    placeholder="رشته تحصیلی شما"
-                >
-
-
-                <label for="sentence">
-                    جمله‌ی مهربانانه
-                </label>
-
-                <textarea
-                    id="sentence"
-                    maxlength="300"
-                    required
-                    placeholder="یک جمله‌ی خوب برای دیگران بنویس..."
-                ></textarea>
-
-
-                <button
-                    type="submit"
-                    class="submit-button">
-                    قرار دادن روی درخت 🌿
-                </button>
-
-            </form>
-
-            <p id="form-error"></p>
-
-        </div>
+        <span>
+            +
+        </span>
 
     </div>
 
 
-    <!-- =========================
-         MESSAGE MODAL
-    ========================== -->
+</main>
 
-    <div id="message-modal" class="modal">
 
-        <div class="modal-content message-content">
 
-            <button id="close-message"
-                    class="close-button">
-                ×
+<!-- =========================
+     FORM
+========================= -->
+
+<div
+    id="form-modal"
+    class="modal"
+>
+
+    <div class="modal-content">
+
+        <button
+            id="close-form"
+            class="close-button"
+        >
+            ×
+        </button>
+
+
+        <h2>
+            یک برگ مهربانی بساز 🌱
+        </h2>
+
+
+        <form id="kindness-form">
+
+
+            <label for="name">
+                نام
+            </label>
+
+            <input
+                type="text"
+                id="name"
+                maxlength="100"
+                required
+                placeholder="نام شما"
+            >
+
+
+            <label for="major">
+                رشته
+            </label>
+
+            <input
+                type="text"
+                id="major"
+                maxlength="100"
+                required
+                placeholder="رشته تحصیلی شما"
+            >
+
+
+            <label for="sentence">
+                جمله‌ی مهربانانه
+            </label>
+
+            <textarea
+                id="sentence"
+                maxlength="300"
+                required
+                placeholder="یک جمله‌ی خوب برای دیگران بنویس..."
+            ></textarea>
+
+
+            <button
+                type="submit"
+                class="submit-button"
+            >
+                قرار دادن روی درخت 🌿
             </button>
 
-            <div id="message-text"></div>
 
-        </div>
+        </form>
+
+
+        <p id="form-error"></p>
 
     </div>
 
+</div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+
+<!-- =========================
+     MESSAGE
+========================= -->
+
+<div
+    id="message-modal"
+    class="modal"
+>
+
+    <div class="modal-content message-content">
+
+        <button
+            id="close-message"
+            class="close-button"
+        >
+            ×
+        </button>
+
+
+        <div id="message-text"></div>
+
+    </div>
+
+</div>
+
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
+
 
 </body>
 
