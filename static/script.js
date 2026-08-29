@@ -108,60 +108,80 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
     // CREATE LEAF
     // =========================
+function createLeaf(message) {
 
-    function createLeaf(message) {
-
-
-        const leaf =
-            document.createElement("div");
+    const leaf =
+        document.createElement("div");
 
 
-        leaf.className =
-            "leaf used";
+    leaf.className =
+        "leaf used";
 
 
-        leaf.dataset.leaf =
-            message.leaf_number;
+    leaf.dataset.leaf =
+        message.leaf_number;
 
 
-        leaf.style.left =
-            message.position_x + "%";
+    // =========================
+    // POSITION
+    // =========================
+
+    leaf.style.left =
+        message.position_x + "%";
 
 
-        leaf.style.top =
-            message.position_y + "%";
+    leaf.style.top =
+        message.position_y + "%";
 
 
-        leaf.messageData =
-            message;
+    // =========================
+    // NATURAL SIZE
+    // =========================
+
+    leaf.style.width =
+        message.leaf_size + "%";
 
 
-        leaf.innerHTML = `
+    // =========================
+    // NATURAL ROTATION
+    // =========================
 
-            <img
-                src="/static/images/leaf.png"
-                alt="برگ مهربانی"
-            >
-
-            <span>
-                ${escapeHtml(message.sentence)}
-            </span>
-
-        `;
+    leaf.style.setProperty(
+        "--leaf-rotation",
+        message.leaf_rotation + "deg"
+    );
 
 
-        leaf.addEventListener("click", function () {
+    leaf.messageData =
+        message;
+
+
+    leaf.innerHTML = `
+
+        <img
+            src="/static/images/leaf.png"
+            alt="برگ مهربانی"
+        >
+
+        <span>
+            ${escapeHtml(message.sentence)}
+        </span>
+
+    `;
+
+
+    leaf.addEventListener(
+        "click",
+        function () {
 
             showMessage(message);
 
-        });
+        }
+    );
 
 
-        leavesContainer.appendChild(leaf);
-
-    }
-
-
+    leavesContainer.appendChild(leaf);
+}
 
     // =========================
     // SHOW MESSAGE
