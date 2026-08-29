@@ -1,0 +1,439 @@
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+
+body {
+    font-family: Tahoma, Arial, sans-serif;
+    background: #87ceeb;
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   TREE
+========================= */
+
+.tree-container {
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+
+.tree-image {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    left: 0;
+    top: 0;
+
+    z-index: 1;
+}
+
+
+/* =========================
+   WELCOME TEXT
+========================= */
+
+.welcome-text {
+    position: absolute;
+
+    top: 5%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 10;
+
+    text-align: center;
+
+    color: white;
+
+    text-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.35);
+
+    pointer-events: none;
+}
+
+
+.welcome-text h1 {
+    margin: 0;
+
+    font-size: clamp(28px, 5vw, 55px);
+}
+
+
+.welcome-text p {
+    font-size: clamp(14px, 2vw, 20px);
+}
+
+
+/* =========================
+   LEAVES
+========================= */
+
+#leaves-container {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    top: 0;
+    left: 0;
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+
+.leaf {
+    position: absolute;
+
+    width: 10%;
+    max-width: 150px;
+    min-width: 80px;
+
+    transform: translate(-50%, -50%);
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
+}
+
+
+.leaf:hover {
+    transform:
+        translate(-50%, -50%)
+        scale(1.12);
+
+    filter:
+        drop-shadow(0 5px 8px rgba(0, 0, 0, 0.25));
+}
+
+
+.leaf img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+}
+
+
+.leaf span {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 75%;
+
+    text-align: center;
+
+    font-size: clamp(8px, 1.2vw, 15px);
+
+    line-height: 1.4;
+
+    color: #24351e;
+
+    direction: rtl;
+
+    word-wrap: break-word;
+
+    pointer-events: none;
+}
+
+
+/* Used leaf */
+
+.leaf.used {
+    cursor: pointer;
+}
+
+
+.leaf.used:hover {
+    transform:
+        translate(-50%, -50%)
+        scale(1.08);
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    position: fixed;
+
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+        rgba(0, 0, 0, 0.45);
+
+    z-index: 100;
+}
+
+
+.modal.show {
+    display: flex;
+}
+
+
+.modal-content {
+    position: relative;
+
+    width: min(90%, 450px);
+
+    background: #fff;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.25);
+
+    direction: rtl;
+}
+
+
+.modal-content h2 {
+    margin-top: 0;
+
+    text-align: center;
+
+    color: #365c2a;
+}
+
+
+.close-button {
+    position: absolute;
+
+    top: 10px;
+    left: 15px;
+
+    border: none;
+
+    background: none;
+
+    font-size: 30px;
+
+    cursor: pointer;
+
+    color: #777;
+}
+
+
+.close-button:hover {
+    color: #222;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+#kindness-form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+#kindness-form label {
+    margin-top: 8px;
+
+    font-weight: bold;
+
+    color: #40583a;
+}
+
+
+#kindness-form input,
+#kindness-form textarea {
+    width: 100%;
+
+    border: 1px solid #ccc;
+
+    border-radius: 10px;
+
+    padding: 12px;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    direction: rtl;
+
+    outline: none;
+}
+
+
+#kindness-form input:focus,
+#kindness-form textarea:focus {
+    border-color: #7cab68;
+}
+
+
+#kindness-form textarea {
+    height: 120px;
+
+    resize: vertical;
+}
+
+
+.submit-button {
+    margin-top: 15px;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #6d9d58;
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.submit-button:hover {
+    background: #557f45;
+}
+
+
+.submit-button:disabled {
+    opacity: 0.6;
+
+    cursor: wait;
+}
+
+
+#form-error {
+    color: #c0392b;
+
+    text-align: center;
+
+    margin-bottom: 0;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message-content {
+    text-align: center;
+}
+
+
+#message-text {
+    line-height: 1.9;
+
+    color: #333;
+}
+
+
+.message-name {
+    font-size: 20px;
+
+    font-weight: bold;
+
+    color: #416438;
+}
+
+
+.message-major {
+    font-size: 14px;
+
+    color: #777;
+
+    margin-bottom: 15px;
+}
+
+
+.message-sentence {
+    font-size: 18px;
+
+    font-weight: bold;
+
+    line-height: 2;
+
+    color: #293b25;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .leaf {
+        width: 15%;
+        min-width: 55px;
+    }
+
+    .welcome-text {
+        top: 3%;
+        width: 90%;
+    }
+
+    .welcome-text h1 {
+        font-size: 30px;
+    }
+
+    .welcome-text p {
+        font-size: 13px;
+    }
+
+    .modal-content {
+        padding: 25px 20px;
+    }
+}
