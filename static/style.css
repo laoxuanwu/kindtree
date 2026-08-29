@@ -128,32 +128,36 @@ body {
 /* =========================
    NORMAL LEAVES
 ========================= */
-
 .leaf {
     position: absolute;
 
     width: 10%;
+
+    min-width: 65px;
     max-width: 150px;
-    min-width: 80px;
 
     transform:
-        translate(-50%, -50%);
+        translate(-50%, -50%)
+        rotate(var(--leaf-rotation, 0deg));
 
     cursor: pointer;
 
     pointer-events: auto;
 
     transition:
-        transform 0.2s ease,
-        filter 0.2s ease;
+        transform 0.25s ease,
+        filter 0.25s ease;
 
     animation:
         leafAppear 0.5s ease;
 }
 
+
 .leaf:hover {
+
     transform:
         translate(-50%, -50%)
+        rotate(var(--leaf-rotation, 0deg))
         scale(1.12);
 
     filter:
@@ -162,14 +166,19 @@ body {
         );
 }
 
+
 .leaf img {
+
     display: block;
 
     width: 100%;
     height: auto;
+
 }
 
+
 .leaf span {
+
     position: absolute;
 
     top: 50%;
@@ -178,12 +187,12 @@ body {
     transform:
         translate(-50%, -50%);
 
-    width: 75%;
+    width: 72%;
 
     text-align: center;
 
     font-size:
-        clamp(8px, 1.2vw, 15px);
+        clamp(8px, 1.15vw, 15px);
 
     line-height: 1.4;
 
@@ -194,9 +203,8 @@ body {
     word-wrap: break-word;
 
     pointer-events: none;
+
 }
-
-
 /* =========================
    ADD (+) LEAF
 ========================= */
