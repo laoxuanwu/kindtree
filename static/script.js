@@ -1,66 +1,57 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    const leaves = document.querySelectorAll(".leaf");
 
-    const formModal = document.getElementById("form-modal");
-    const messageModal = document.getElementById("message-modal");
+    const leavesContainer =
+        document.getElementById("leaves-container");
 
-    const closeForm = document.getElementById("close-form");
-    const closeMessage = document.getElementById("close-message");
 
-    const form = document.getElementById("kindness-form");
+    const addLeaf =
+        document.getElementById("add-leaf");
 
-    const leafNumberInput =
-        document.getElementById("leaf-number");
+
+    const formModal =
+        document.getElementById("form-modal");
+
+
+    const messageModal =
+        document.getElementById("message-modal");
+
+
+    const closeForm =
+        document.getElementById("close-form");
+
+
+    const closeMessage =
+        document.getElementById("close-message");
+
+
+    const form =
+        document.getElementById("kindness-form");
+
 
     const errorText =
         document.getElementById("form-error");
+
 
     const messageText =
         document.getElementById("message-text");
 
 
+
     // =========================
-    // OPEN LEAF
+    // ADD BUTTON
     // =========================
 
-    leaves.forEach(function (leaf) {
+    addLeaf.addEventListener("click", function () {
 
-        leaf.addEventListener("click", function () {
+        errorText.textContent = "";
 
-            const leafNumber =
-                leaf.dataset.leaf;
+        form.reset();
 
-            // If leaf already has a message,
-            // show the message instead.
-            if (leaf.classList.contains("used")) {
-
-                const message =
-                    leaf.messageData;
-
-                showMessage(message);
-
-                return;
-            }
-
-
-            // Otherwise open the form.
-
-            leafNumberInput.value =
-                leafNumber;
-
-            errorText.textContent = "";
-
-            form.reset();
-
-            leafNumberInput.value =
-                leafNumber;
-
-            formModal.classList.add("show");
-
-        });
+        formModal.classList.add("show");
 
     });
+
 
 
     // =========================
@@ -74,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
+
     // =========================
     // CLOSE MESSAGE
     // =========================
@@ -85,8 +77,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
+
     // =========================
-    // CLICK OUTSIDE MODAL
+    // CLICK OUTSIDE
     // =========================
 
     formModal.addEventListener("click", function (event) {
@@ -111,143 +104,63 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
+
     // =========================
-    // SUBMIT
+    // CREATE LEAF
     // =========================
 
-    form.addEventListener("submit", async function (event) {
-
-        event.preventDefault();
+    function createLeaf(message) {
 
 
-        const name =
-            document.getElementById("name").value.trim();
-
-        const major =
-            document.getElementById("major").value.trim();
-
-        const sentence =
-            document.getElementById("sentence").value.trim();
-
-        const leafNumber =
-            leafNumberInput.value;
+        const leaf =
+            document.createElement("div");
 
 
-        errorText.textContent = "";
+        leaf.className =
+            "leaf used";
 
 
-        const submitButton =
-            form.querySelector(".submit-button");
-
-        submitButton.disabled = true;
+        leaf.dataset.leaf =
+            message.leaf_number;
 
 
-        try {
-
-            const response = await fetch("/submit", {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    name: name,
-
-                    major: major,
-
-                    sentence: sentence,
-
-                    leaf_number: leafNumber
-
-                })
-
-            });
+        leaf.style.left =
+            message.position_x + "%";
 
 
-            const data =
-                await response.json();
+        leaf.style.top =
+            message.position_y + "%";
 
 
-            if (!response.ok) {
-
-                errorText.textContent =
-                    data.error || "خطایی رخ داد.";
-
-                submitButton.disabled = false;
-
-                return;
-            }
+        leaf.messageData =
+            message;
 
 
-            // =========================
-            // SUCCESS
-            // =========================
+        leaf.innerHTML = `
 
-            const message =
-                data.message;
+            <img
+                src="/static/images/leaf.png"
+                alt="برگ مهربانی"
+            >
 
+            <span>
+                ${escapeHtml(message.sentence)}
+            </span>
 
-            const leaf =
-                document.querySelector(
-                    `.leaf[data-leaf="${message.leaf_number}"]`
-                );
-
-
-            if (leaf) {
-
-                // Save message on leaf
-
-                leaf.messageData =
-                    message;
+        `;
 
 
-                // Put sentence on leaf
-
-                const text =
-                    leaf.querySelector("span");
-
-                text.textContent =
-                    message.sentence;
-
-
-                // Mark leaf as used
-
-                leaf.classList.add("used");
-
-            }
-
-
-            // Close form
-
-            formModal.classList.remove("show");
-
-
-            // Reset
-
-            form.reset();
-
-
-            // Show success message
+        leaf.addEventListener("click", function () {
 
             showMessage(message);
 
-
-        } catch (error) {
-
-            console.error(error);
-
-            errorText.textContent =
-                "ارتباط با سرور برقرار نشد.";
-
-        }
+        });
 
 
-        submitButton.disabled = false;
+        leavesContainer.appendChild(leaf);
 
-    });
+    }
+
 
 
     // =========================
@@ -255,6 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
 
     function showMessage(message) {
+
 
         messageText.innerHTML = `
 
@@ -272,38 +186,153 @@ document.addEventListener("DOMContentLoaded", function () {
 
         `;
 
+
         messageModal.classList.add("show");
 
     }
 
 
-    // =========================
-    // SECURITY
-    // =========================
-
-    function escapeHtml(text) {
-
-        const div =
-            document.createElement("div");
-
-        div.textContent =
-            text;
-
-        return div.innerHTML;
-
-    }
-
 
     // =========================
-    // LOAD EXISTING MESSAGES
+    // SUBMIT
+    // =========================
+
+    form.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const name =
+                document.getElementById("name")
+                .value
+                .trim();
+
+
+            const major =
+                document.getElementById("major")
+                .value
+                .trim();
+
+
+            const sentence =
+                document.getElementById("sentence")
+                .value
+                .trim();
+
+
+            errorText.textContent = "";
+
+
+            const submitButton =
+                form.querySelector(".submit-button");
+
+
+            submitButton.disabled = true;
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        "/submit",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                name: name,
+
+                                major: major,
+
+                                sentence: sentence
+
+                            })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    errorText.textContent =
+                        data.error ||
+                        "خطایی رخ داد.";
+
+                    submitButton.disabled = false;
+
+                    return;
+
+                }
+
+
+                // =========================
+                // CREATE THE NEW LEAF
+                // =========================
+
+                createLeaf(data.message);
+
+
+                // Close form
+
+                formModal.classList.remove("show");
+
+
+                // Reset form
+
+                form.reset();
+
+
+                // Show the new message
+
+                showMessage(data.message);
+
+
+            }
+
+
+            catch (error) {
+
+                console.error(error);
+
+                errorText.textContent =
+                    "ارتباط با سرور برقرار نشد.";
+
+            }
+
+
+            submitButton.disabled = false;
+
+        }
+    );
+
+
+
+    // =========================
+    // LOAD EXISTING LEAVES
     // =========================
 
     async function loadMessages() {
 
+
         try {
+
 
             const response =
                 await fetch("/messages");
+
 
             const messages =
                 await response.json();
@@ -311,35 +340,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
             messages.forEach(function (message) {
 
-                const leaf =
-                    document.querySelector(
-                        `.leaf[data-leaf="${message.leaf_number}"]`
-                    );
-
-
-                if (!leaf) {
-                    return;
-                }
-
-
-                leaf.messageData =
-                    message;
-
-
-                const text =
-                    leaf.querySelector("span");
-
-
-                text.textContent =
-                    message.sentence;
-
-
-                leaf.classList.add("used");
+                createLeaf(message);
 
             });
 
 
-        } catch (error) {
+        }
+
+
+        catch (error) {
 
             console.error(
                 "Could not load messages:",
@@ -351,8 +360,28 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    // Load database messages
-    // when the page starts.
+
+    // =========================
+    // SECURITY
+    // =========================
+
+    function escapeHtml(text) {
+
+        const div =
+            document.createElement("div");
+
+
+        div.textContent =
+            text;
+
+
+        return div.innerHTML;
+
+    }
+
+
+
+    // Load existing leaves
 
     loadMessages();
 
