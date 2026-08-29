@@ -64,14 +64,21 @@ body {
 
     width: 90%;
 
-    z-index: 10;
+    z-index: 30;
 
     text-align: center;
 
     color: white;
 
+    /*
+       Strong soft shadow makes the text
+       readable over the lime leaves
+       without adding a solid background.
+    */
     text-shadow:
-        0 2px 5px rgba(0, 0, 0, 0.35);
+        0 2px 3px rgba(35, 70, 25, 0.95),
+        0 4px 12px rgba(20, 50, 15, 0.75),
+        0 0 18px rgba(20, 50, 15, 0.45);
 
     pointer-events: none;
 }
@@ -81,14 +88,24 @@ body {
 
     font-size:
         clamp(28px, 5vw, 55px);
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
 }
 
 .welcome-text p {
+    margin-top: 10px;
+
     font-size:
         clamp(14px, 2vw, 20px);
+
+    font-weight: 500;
+
+    text-shadow:
+        0 2px 3px rgba(35, 70, 25, 1),
+        0 3px 10px rgba(20, 50, 15, 0.9);
 }
-
-
 /* =========================
    LEAVES CONTAINER
 ========================= */
