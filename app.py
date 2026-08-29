@@ -246,7 +246,7 @@ def submit():
 
 
         # Small natural rotation.
-        candidate_rotation = random.uniform(-35, 35)
+        candidate_rotation = random.uniform(-25, 25)
 
 
         # Check distance from existing leaves.
@@ -292,7 +292,7 @@ def submit():
         position_y = random.uniform(18, 76)
 
         leaf_size = random.uniform(8, 12)
-        leaf_rotation = random.uniform(-35, 35)
+        leaf_rotation = random.uniform(-25, 25)
 
 
     # =========================
