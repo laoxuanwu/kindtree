@@ -145,13 +145,44 @@ body {
     pointer-events: auto;
 
     transition:
-        transform 0.25s ease,
         filter 0.25s ease;
 
     animation:
-        leafAppear 0.5s ease;
+        leafSway var(--sway-duration, 5s)
+        ease-in-out
+        infinite;
+
+    animation-delay:
+        var(--sway-delay, 0s);
 }
 
+@keyframes leafSway {
+
+    0% {
+        transform:
+            translate(-50%, -50%)
+            rotate(
+                calc(var(--leaf-rotation, 0deg) - 2deg)
+            );
+    }
+
+    50% {
+        transform:
+            translate(-50%, -50%)
+            rotate(
+                calc(var(--leaf-rotation, 0deg) + 2deg)
+            );
+    }
+
+    100% {
+        transform:
+            translate(-50%, -50%)
+            rotate(
+                calc(var(--leaf-rotation, 0deg) - 2deg)
+            );
+    }
+
+}
 
 .leaf:hover {
 
