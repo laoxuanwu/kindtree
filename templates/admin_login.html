@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ورود مدیر</title>
+
+    <style>
+
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+
+            background: #f1f5ed;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            min-height: 100vh;
+
+            margin: 0;
+        }
+
+        .box {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 15px;
+
+            width: min(90%, 350px);
+
+            box-shadow:
+                0 5px 25px rgba(0,0,0,0.12);
+
+            text-align: center;
+        }
+
+        h2 {
+            color: #365c2a;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 12px;
+
+            box-sizing: border-box;
+
+            border: 1px solid #ccc;
+
+            border-radius: 8px;
+
+            margin: 15px 0;
+
+            font-family: inherit;
+        }
+
+        button {
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #6d9d58;
+
+            color: white;
+
+            font-family: inherit;
+
+            cursor: pointer;
+        }
+
+        .error {
+            color: #c0392b;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="box">
+
+        <h2>مدیریت درخت 🌳</h2>
+
+        <form method="POST">
+
+            <input
+                type="password"
+                name="password"
+                placeholder="رمز عبور"
+                required
+            >
+
+            <button type="submit">
+                ورود
+            </button>
+
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
