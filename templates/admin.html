@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>مدیریت درخت</title>
+
+    <style>
+
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+
+            background: #f1f5ed;
+
+            margin: 0;
+
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 800px;
+
+            margin: auto;
+        }
+
+        h1 {
+            color: #365c2a;
+        }
+
+        .message {
+            background: white;
+
+            padding: 20px;
+
+            margin-bottom: 15px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .name {
+            font-weight: bold;
+
+            color: #365c2a;
+        }
+
+        .major {
+            color: #777;
+
+            font-size: 14px;
+
+            margin-top: 5px;
+        }
+
+        .sentence {
+            margin-top: 12px;
+
+            line-height: 1.8;
+        }
+
+        .delete-button {
+            margin-top: 15px;
+
+            padding: 8px 15px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #c0392b;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-family: inherit;
+        }
+
+        .logout {
+            display: inline-block;
+
+            margin-bottom: 25px;
+
+            color: #555;
+        }
+
+        .empty {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>مدیریت درخت 🌳</h1>
+
+    <a
+        href="{{ url_for('admin_logout') }}"
+        class="logout"
+    >
+        خروج
+    </a>
+
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="message">
+
+                <div class="name">
+                    {{ message["name"] }}
+                </div>
+
+                <div class="major">
+                    {{ message["major"] }}
+                </div>
+
+                <div class="sentence">
+                    {{ message["sentence"] }}
+                </div>
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'delete_message',
+                        message_id=message['id']
+                    ) }}"
+                    onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید این برگ را حذف کنید؟');"
+                >
+
+                    <button
+                        type="submit"
+                        class="delete-button"
+                    >
+                        حذف دائمی
+                    </button>
+
+                </form>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+            هنوز هیچ برگ مهربانی وجود ندارد.
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>
