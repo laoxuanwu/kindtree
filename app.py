@@ -5,7 +5,7 @@ import random
 
 app = Flask(__name__)
 
-DATABASE = "kindness.db"
+DATABASE = "/app/database/kindness.db"
 
 
 # =========================
