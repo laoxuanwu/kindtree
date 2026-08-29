@@ -29,14 +29,39 @@ def init_db():
             sentence TEXT NOT NULL,
             leaf_number INTEGER NOT NULL UNIQUE,
             position_x REAL NOT NULL,
-            position_y REAL NOT NULL
+            position_y REAL NOT NULL,
+            leaf_size REAL NOT NULL DEFAULT 10,
+            leaf_rotation REAL NOT NULL DEFAULT 0
         )
     """)
 
+    # Check existing columns
+    columns = conn.execute(
+        "PRAGMA table_info(messages)"
+    ).fetchall()
+
+    column_names = {
+        column["name"]
+        for column in columns
+    }
+
+    # Add new columns if this is an older database
+    if "leaf_size" not in column_names:
+
+        conn.execute("""
+            ALTER TABLE messages
+            ADD COLUMN leaf_size REAL NOT NULL DEFAULT 10
+        """)
+
+    if "leaf_rotation" not in column_names:
+
+        conn.execute("""
+            ALTER TABLE messages
+            ADD COLUMN leaf_rotation REAL NOT NULL DEFAULT 0
+        """)
+
     conn.commit()
     conn.close()
-
-
 # =========================
 # HOME
 # =========================
