@@ -174,7 +174,7 @@ leaf.style.setProperty(
         >
 
         <span>
-            ${escapeHtml(message.sentence)}
+            ${escapeHtml(truncateSentence(message.sentence))}
         </span>
 
     `;
@@ -408,7 +408,16 @@ leaf.style.setProperty(
         return div.innerHTML;
 
     }
+function truncateSentence(sentence) {
 
+    const maxLength = 47;
+
+    if (sentence.length <= maxLength) {
+        return sentence;
+    }
+
+    return sentence.substring(0, maxLength).trim() + "...";
+}
 
 
     // Load existing leaves
